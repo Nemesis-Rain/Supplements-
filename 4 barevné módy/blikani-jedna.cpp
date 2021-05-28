@@ -1,0 +1,42 @@
+#include <Arduino.h>
+#include <SmartLeds.h>
+
+const int LED_COUNT = 8;
+const int DATA_PIN = 21;
+const int CHANNEL = 0;
+
+// SmartLed -> RMT driver (WS2812/WS2812B/SK6812/WS2813)
+SmartLed leds( LED_WS2812, LED_COUNT, DATA_PIN, CHANNEL, DoubleBuffer );
+
+// const int CLK_PIN = 23;
+// APA102 -> SPI driver
+//Apa102 leds(LED_COUNT, CLK_PIN, DATA_PIN, DoubleBuffer);
+
+void SetLedAll(uint8_t R, uint8_t G, uint8_t B)
+{
+  for (int i = 0; i < LED_COUNT; i++)
+    leds[i] = Rgb{R, G, B};
+  leds.wait();
+  leds.show();
+}
+
+void ShowLeds(void) 
+{
+    leds.wait();  
+    leds.show();
+}
+
+// ------------------------------------------------------------------------------------------------
+void setup() {
+  Serial.begin(9600);  
+}
+
+
+void loop() {
+    
+SetLedAll(64, 0, 0);
+
+leds.wait();  
+leds.show();
+    
+}
